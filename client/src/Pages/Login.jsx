@@ -25,10 +25,10 @@ export default function Login() {
   const { loading, error, isAuthenticated, token } = useSelector(
     (state) => state.user
   );
-
+console.log(token)
   const loginSubmit = (e) => {
     e.preventDefault();
-    console.log("k")
+ 
     dispatch(login(loginEmail, loginPassword));
   };
   useEffect(() => {

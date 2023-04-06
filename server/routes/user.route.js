@@ -6,7 +6,8 @@ const {
   getSingleUser,
   deleteUser,
   forgotPasswordController,
-  updateUserRole
+  updateUserRole,
+  getUserDetails,
 } = require("../controller/user.controller");
 const { requireSignIn, isAdmin } = require("../middleware/authMiddleware");
 
@@ -20,7 +21,7 @@ userRouter.delete("/:id", requireSignIn, isAdmin, deleteUser);
 //Forgot Password || POST
 userRouter.post("/forgot-password", requireSignIn, forgotPasswordController);
 userRouter.put("/admin/user/:id", requireSignIn, updateUserRole);
-
+userRouter.get("/me", requireSignIn, getUserDetails);
 //protected User route auth
 userRouter.get("/user-auth", requireSignIn, (req, res) => {
   res.status(200).send({ ok: true });
