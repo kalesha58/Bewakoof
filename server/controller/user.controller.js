@@ -7,14 +7,13 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const cloudinary = require("cloudinary");
 // {===========================Registration==============================}
 exports.registerUser = async (req, res) => {
-
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatar",
-    width: 150,
-    crop: "scale",
-  });
+  // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+  //   folder: "avatar",
+  //   width: 150,
+  //   crop: "scale",
+  // });
   try {
-    const { name, email, password, gender, number, answer } = req.body;
+    const { name, email, password, gender, number, answer, avatar } = req.body;
     //validations
     if (!name) {
       return res.send({ error: "Name is Required" });
@@ -25,7 +24,7 @@ exports.registerUser = async (req, res) => {
     if (!password) {
       return res.send({ message: "Password is Required" });
     }
-   
+
     if (!answer) {
       return res.send({ message: "answer  is Required" });
     }
@@ -48,13 +47,10 @@ exports.registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-     
+
       number,
       password: hashedPassword,
-      avatar: {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-      },
+      avatar,
       answer: answer,
     });
 
@@ -214,7 +210,6 @@ exports.forgotPasswordController = async (req, res) => {
     });
   }
 };
-
 
 // {========================update User Role -- Admin========================================}
 exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
