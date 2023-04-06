@@ -13,33 +13,53 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearErrors } from "../Redux/Actions/userAction";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/auth";
+import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   //   {=============================LOGIN--FORM===========================}
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  const { loading, error, isAuthenticated, token } = useSelector(
-    (state) => state.user
-  );
-console.log(token)
-  const loginSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [auth, setAuth] = useAuth();
+
+  const location = useLocation();
+
+  // //default axios
+  // axios.defaults.headers.common["Authorization"] = token
+
+  const loginSubmit = async (e) => {
     e.preventDefault();
- 
-    dispatch(login(loginEmail, loginPassword));
+    try {
+      const res = await axios.post("http://localhost:5000/api/v1/auth/login", {
+        email,
+        password,
+      });
+      if (res && res.data.success) {
+        toast.success("User Login Successfuly ....", {
+          position: "top-center",
+        });
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate(location.state || "/");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  useEffect(() => {
-    if (error) {
-      console.log("error");
-      dispatch(clearErrors());
-    }
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [error, isAuthenticated, dispatch, token]);
 
   return (
     <Flex
@@ -68,16 +88,16 @@ console.log(token)
                 <Input
                   type="email"
                   name=""
-                  value={loginEmail}
-                  onChange={(e) => setLoginEmail(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
-                  value={loginPassword}
-                  onChange={(e) => setLoginPassword(e.target.value)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </FormControl>
               <Stack spacing={10}>
@@ -96,9 +116,9 @@ console.log(token)
                     bg: "blue.500",
                   }}
                   type="submit"
-                  value="Login" 
+                  value="Login"
                 />
-               
+                <ToastContainer />
               </Stack>
             </Stack>
           </Box>

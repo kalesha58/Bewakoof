@@ -6,12 +6,12 @@ import {
   Text,
   Container,
   Input,
-  Button,
+  
   SimpleGrid,
   Avatar,
   AvatarGroup,
   useBreakpointValue,
-  IconProps,
+
   Icon,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -19,6 +19,11 @@ import profile from "../images/avatar.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../Redux/Actions/userAction";
+import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const avatars = [
   {
     name: "Ryan Florence",
@@ -45,59 +50,112 @@ const avatars = [
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [avatar, setAvatar] = useState();
+
   const [avatarPreview, setAvatarPreview] = useState(profile);
-  const { loading, error, isAuthenticated, token } = useSelector(
-    (state) => state.user
-  );
+  // const {  isAuthenticated, token } = useSelector(
+  //   (state) => state.user
+  // );
 
   //{=============================REGISTER--FORM===========================}
-  const [users, setUsers] = useState({
-    name: "",
-    email: "",
-    password: "",
-    answer: "",
-    number: "",
-  });
 
-  const { name, email, password, answer, number } = users;
-  const registerSubmit = (e) => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [number, setNumber] = useState("");
+  const [avatar, setAvatar] = useState(profile);
+  const [message, setMessage] = useState(null);
+  const [picMessage, setPicMessage] = useState(null);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const registerSubmit = async (e) => {
     e.preventDefault();
-    const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("answer", answer);
-    myForm.set("number", number);
-    myForm.set("avatar", avatar);
-    dispatch(register(myForm));
-  };
-  const registerDataChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
+    if (name === "") {
+      toast.warning("name is required!", {
+        position: "top-center",
+      });
+    } else if (email === "") {
+      toast.error("email is required!", {
+        position: "top-center",
+      });
+    } else if (!email.includes("@")) {
+      toast.warning("includes @ in your email!", {
+        position: "top-center",
+      });
+    } else if (password === "") {
+      toast.error("password is required!", {
+        position: "top-center",
+      });
+    } else if (password.length < 8) {
+      toast.error("password must be 8 char!", {
+        position: "top-center",
+      });
+    } else if (number.length < 10) {
+      toast.error("confirm phone must be 10 numbers!", {
+        position: "top-center",
+      });
     } else {
-      setUsers({ ...users, [e.target.name]: e.target.value });
+      setMessage(null);
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        setLoading(true);
+
+        const { data } = await axios.post(
+          "http://localhost:5000/api/v1/auth/register",
+          { name, email, password, number, avatar, answer },
+          config
+        );
+        console.log(data);
+        // localStorage.setItem("userInfo", JSON.stringify(data));
+        toast.success("User Registered Successfuly ....", {
+          position: "top-center",
+        });
+
+        setLoading(false);
+        navigate("/login");
+      } catch (error) {
+        setError(error.response.data.message);
+        const FError = error.response.data.message;
+        console.log(FError);
+        toast.success(FError, {
+          position: "top-center",
+        });
+        setLoading(false);
+      }
     }
   };
 
-  useEffect(() => {
-    if (error) {
-      console.log("error");
-      dispatch(clearErrors());
+  const postDetails = (pics) => {
+    if (!avatar) {
+      return setPicMessage("Please Select an image!.. ");
     }
-    if (isAuthenticated) {
-      navigate("/");
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "bewakoof");
+      data.append("cloud_name", "du3acgzcg");
+
+      fetch("https://api.cloudinary.com/v1_1/du3acgzcg/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setAvatar(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return setPicMessage("Please Select an Image");
     }
-  }, [error, isAuthenticated, dispatch, token]);
+  };
 
   return (
     <Box position={"relative"}>
@@ -210,8 +268,8 @@ export default function Register() {
             <Stack spacing={4}>
               <Input
                 placeholder="Name"
-                name="name"
                 value={name}
+                onChange={(e) => setName(e.target.value)}
                 bg={"gray.100"}
                 border={0}
                 type="text"
@@ -219,25 +277,25 @@ export default function Register() {
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
               />
               <Input
                 placeholder="Email"
+                type="email"
                 name="email"
                 value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 bg={"gray.100"}
                 border={0}
-                type="email"
                 color={"gray.500"}
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
               />
               <Input
                 placeholder="Password"
                 name="password"
                 value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 bg={"gray.100"}
                 border={0}
                 type="password"
@@ -245,12 +303,12 @@ export default function Register() {
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
               />
               <Input
-                placeholder="+91 (_) _-_-__"
+                placeholder="+91   (_)    _- _-  __"
                 name="number"
                 value={number}
+                onChange={(e) => setNumber(e.target.value)}
                 bg={"gray.100"}
                 border={0}
                 type="number"
@@ -258,12 +316,12 @@ export default function Register() {
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
               />
               <Input
                 placeholder="Answer"
                 name="answer"
                 value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
                 bg={"gray.100"}
                 border={0}
                 type="text"
@@ -271,13 +329,12 @@ export default function Register() {
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
               />
               <img
                 style={{ borderRadius: "50px" }}
                 width="50px"
                 height="50px"
-                src={avatarPreview}
+                src={setAvatar}
                 alt="Avatar Preview"
               />
               <Input
@@ -291,7 +348,7 @@ export default function Register() {
                 _placeholder={{
                   color: "gray.500",
                 }}
-                onChange={registerDataChange}
+                onChange={(e) => postDetails(e.target.files[0])}
               />
 
               {/* <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
@@ -311,6 +368,7 @@ export default function Register() {
               type="submit"
               value="Signup"
             />
+            <ToastContainer />
           </Box>
           form
         </Stack>

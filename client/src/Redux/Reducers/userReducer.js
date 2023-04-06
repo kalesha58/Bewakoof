@@ -19,7 +19,7 @@ export const userReducer = (state = { user: {} }, action) => {
       return {
         loading: true,
         isAuthenticated: false,
-        
+        token:"",
       };
     case LOGIN_SUCCESS:
    
@@ -28,6 +28,7 @@ export const userReducer = (state = { user: {} }, action) => {
         loading: false,
         isAuthenticated: true,
         user: action.payload,
+        token:action.payload
        
       };
    
@@ -38,6 +39,7 @@ export const userReducer = (state = { user: {} }, action) => {
         loading: false,
         isAuthenticated: true,
         user: action.payload,
+        token:action.payload
       };
 
     case LOGIN_FAIL:

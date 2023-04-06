@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import store from "./store";
+import { AuthProvider } from "./context/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,10 @@ root.render(
 
   <BrowserRouter>
     <ChakraProvider>
+      <AuthProvider>
+
       <App />
+      </AuthProvider>
     </ChakraProvider>
   </BrowserRouter>
   </Provider>

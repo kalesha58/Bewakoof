@@ -23,14 +23,10 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   avatar: {
-    public_id: {
-      type: String,
+    type: String,
       required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
+      default:
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
 
   number: { type: Number, required: true },
