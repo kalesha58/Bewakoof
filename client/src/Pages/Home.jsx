@@ -3,10 +3,13 @@ import SimpleSlider from '../Components/Home/SimpleSlider'
 
 import {Box , Image, Stack} from "@chakra-ui/react"
 import FlexImages from '../Components/Home/FlexImages'
+import Layout from '../Components/Layout/Layout'
 
 
 const Home = () => {
   return (
+    <Layout>
+
     <Box mt="70px" fontFamily={"sans-serif"}  >
      <SimpleSlider/>
       <Box mt={6} >
@@ -16,6 +19,7 @@ const Home = () => {
         <FlexImages/>
       </Stack>
     </Box>
+    </Layout>
   )
 }
 

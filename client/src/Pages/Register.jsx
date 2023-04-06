@@ -6,12 +6,10 @@ import {
   Text,
   Container,
   Input,
-  
   SimpleGrid,
   Avatar,
   AvatarGroup,
   useBreakpointValue,
-
   Icon,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -23,7 +21,8 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Layout from "../Components/Layout/Layout";
+import {Link} from "react-router-dom"
 const avatars = [
   {
     name: "Ryan Florence",
@@ -158,228 +157,238 @@ export default function Register() {
   };
 
   return (
-    <Box position={"relative"}>
-      <Container
-        as={SimpleGrid}
-        maxW={"7xl"}
-        columns={{ base: 1, md: 2 }}
-        spacing={{ base: 10, lg: 32 }}
-        py={{ base: 10, sm: 20, lg: 32 }}
-      >
-        <Stack spacing={{ base: 10, md: 20 }}>
-          <Heading
-            lineHeight={1.1}
-            fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
-          >
-            Senior web designers{" "}
-            <Text
-              as={"span"}
-              bgGradient="linear(to-r, red.400,pink.400)"
-              bgClip="text"
-            >
-              &
-            </Text>{" "}
-            Full-Stack Developers
-          </Heading>
-          <Stack direction={"row"} spacing={4} align={"center"}>
-            <AvatarGroup>
-              {avatars.map((avatar) => (
-                <Avatar
-                  key={avatar.name}
-                  name={avatar.name}
-                  src={avatar.url}
-                  size={{ base: "md", md: "lg" }}
-                  position={"relative"}
-                  zIndex={2}
-                  _before={{
-                    content: '""',
-                    width: "full",
-                    height: "full",
-                    rounded: "full",
-                    transform: "scale(1.125)",
-                    bgGradient: "linear(to-bl, red.400,pink.400)",
-                    position: "absolute",
-                    zIndex: -1,
-                    top: 0,
-                    left: 0,
-                  }}
-                />
-              ))}
-            </AvatarGroup>
-            <Text fontFamily={"heading"} fontSize={{ base: "4xl", md: "6xl" }}>
-              +
-            </Text>
-            <Flex
-              align={"center"}
-              justify={"center"}
-              fontFamily={"heading"}
-              fontSize={{ base: "sm", md: "lg" }}
-              bg={"gray.800"}
-              color={"white"}
-              rounded={"full"}
-              minWidth={useBreakpointValue({ base: "44px", md: "60px" })}
-              minHeight={useBreakpointValue({ base: "44px", md: "60px" })}
-              position={"relative"}
-              _before={{
-                content: '""',
-                width: "full",
-                height: "full",
-                rounded: "full",
-                transform: "scale(1.125)",
-                bgGradient: "linear(to-bl, orange.400,yellow.400)",
-                position: "absolute",
-                zIndex: -1,
-                top: 0,
-                left: 0,
-              }}
-            >
-              YOU
-            </Flex>
-          </Stack>
-        </Stack>
-        <Stack
-          bg={"gray.50"}
-          rounded={"xl"}
-          p={{ base: 4, sm: 6, md: 8 }}
-          spacing={{ base: 8 }}
-          maxW={{ lg: "lg" }}
+    <Layout>
+      <Box position={"relative"}>
+        <Container
+          as={SimpleGrid}
+          maxW={"7xl"}
+          columns={{ base: 1, md: 2 }}
+          spacing={{ base: 10, lg: 32 }}
+          py={{ base: 10, sm: 20, lg: 32 }}
         >
-          <Stack spacing={4}>
+          <Stack spacing={{ base: 10, md: 20 }}>
             <Heading
-              color={"gray.800"}
               lineHeight={1.1}
-              fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}
+              fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
             >
-              Join our team
+              Senior web designers{" "}
               <Text
                 as={"span"}
                 bgGradient="linear(to-r, red.400,pink.400)"
                 bgClip="text"
               >
-                !
-              </Text>
+                &
+              </Text>{" "}
+              Full-Stack Developers
             </Heading>
-            {/* <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
+            <Stack direction={"row"} spacing={4} align={"center"}>
+              <AvatarGroup>
+                {avatars.map((avatar) => (
+                  <Avatar
+                    key={avatar.name}
+                    name={avatar.name}
+                    src={avatar.url}
+                    size={{ base: "md", md: "lg" }}
+                    position={"relative"}
+                    zIndex={2}
+                    _before={{
+                      content: '""',
+                      width: "full",
+                      height: "full",
+                      rounded: "full",
+                      transform: "scale(1.125)",
+                      bgGradient: "linear(to-bl, red.400,pink.400)",
+                      position: "absolute",
+                      zIndex: -1,
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                ))}
+              </AvatarGroup>
+              <Text
+                fontFamily={"heading"}
+                fontSize={{ base: "4xl", md: "6xl" }}
+              >
+                +
+              </Text>
+              <Flex
+                align={"center"}
+                justify={"center"}
+                fontFamily={"heading"}
+                fontSize={{ base: "sm", md: "lg" }}
+                bg={"gray.800"}
+                color={"white"}
+                rounded={"full"}
+                minWidth={useBreakpointValue({ base: "44px", md: "60px" })}
+                minHeight={useBreakpointValue({ base: "44px", md: "60px" })}
+                position={"relative"}
+                _before={{
+                  content: '""',
+                  width: "full",
+                  height: "full",
+                  rounded: "full",
+                  transform: "scale(1.125)",
+                  bgGradient: "linear(to-bl, orange.400,yellow.400)",
+                  position: "absolute",
+                  zIndex: -1,
+                  top: 0,
+                  left: 0,
+                }}
+              >
+                YOU
+              </Flex>
+            </Stack>
+          </Stack>
+          <Stack
+            bg={"gray.50"}
+            rounded={"xl"}
+            p={{ base: 4, sm: 6, md: 8 }}
+            spacing={{ base: 8 }}
+            maxW={{ lg: "lg" }}
+          >
+            <Stack spacing={4}>
+              <Heading
+                color={"gray.800"}
+                lineHeight={1.1}
+                fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}
+              >
+                Join our team
+                <Text
+                  as={"span"}
+                  bgGradient="linear(to-r, red.400,pink.400)"
+                  bgClip="text"
+                >
+                  !
+                </Text>
+              </Heading>
+              {/* <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
                 We’re looking for amazing engineers just like you! Become a part
                 of our rockstar engineering team and skyrocket your career!
               </Text> */}
-          </Stack>
-          <Box as={"form"} mt={10} onSubmit={registerSubmit}>
-            <Stack spacing={4}>
-              <Input
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                bg={"gray.100"}
-                border={0}
-                type="text"
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-              />
-              <Input
-                placeholder="Email"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                bg={"gray.100"}
-                border={0}
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-              />
-              <Input
-                placeholder="Password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                bg={"gray.100"}
-                border={0}
-                type="password"
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-              />
-              <Input
-                placeholder="+91   (_)    _- _-  __"
-                name="number"
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                bg={"gray.100"}
-                border={0}
-                type="number"
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-              />
-              <Input
-                placeholder="Answer"
-                name="answer"
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                bg={"gray.100"}
-                border={0}
-                type="text"
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-              />
-              <img
-                style={{ borderRadius: "50px" }}
-                width="50px"
-                height="50px"
-                src={setAvatar}
-                alt="Avatar Preview"
-              />
-              <Input
-                placeholder="Avatar"
-                bg={"gray.100"}
-                border={0}
-                type="file"
-                name="avatar"
-                accept="image/*"
-                color={"gray.500"}
-                _placeholder={{
-                  color: "gray.500",
-                }}
-                onChange={(e) => postDetails(e.target.files[0])}
-              />
-
-              {/* <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
+            </Stack>
+            <Box as={"form"} mt={10} onSubmit={registerSubmit}>
+              <Stack spacing={4}>
+                <Input
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  bg={"gray.100"}
+                  border={0}
+                  type="text"
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                />
+                <Input
+                  placeholder="Email"
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  bg={"gray.100"}
+                  border={0}
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                />
+                <Input
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  bg={"gray.100"}
+                  border={0}
+                  type="password"
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                />
+                <Input
+                  placeholder="+91   (_)    _- _-  __"
+                  name="number"
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                  bg={"gray.100"}
+                  border={0}
+                  type="number"
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                />
+                <Input
+                  placeholder="Answer"
+                  name="answer"
+                  value={answer}
+                  onChange={(e) => setAnswer(e.target.value)}
+                  bg={"gray.100"}
+                  border={0}
+                  type="text"
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                />
+                <img
+                  style={{ borderRadius: "50px" }}
+                  width="50px"
+                  height="50px"
+                  src={setAvatar}
+                  alt="Avatar Preview"
+                />
+                <Input
+                  placeholder="Avatar"
+                  bg={"gray.100"}
+                  border={0}
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  color={"gray.500"}
+                  _placeholder={{
+                    color: "gray.500",
+                  }}
+                  onChange={(e) => postDetails(e.target.files[0])}
+                />
+                 
+                {/* <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
                   Upload CV
                 </Button> */}
-            </Stack>
-            <Input
-              fontFamily={"heading"}
-              mt={8}
-              w={"full"}
-              bgGradient="linear(to-r, red.400,pink.400)"
-              color={"white"}
-              _hover={{
-                bgGradient: "linear(to-r, red.400,pink.400)",
-                boxShadow: "xl",
-              }}
-              type="submit"
-              value="Signup"
-            />
-            <ToastContainer />
-          </Box>
-          form
-        </Stack>
-      </Container>
-      <Blur
-        position={"absolute"}
-        top={-10}
-        left={-10}
-        style={{ filter: "blur(70px)" }}
-      />
-    </Box>
+              </Stack>
+              <Input
+                fontFamily={"heading"}
+                mt={8}
+                w={"full"}
+                bgGradient="linear(to-r, red.400,pink.400)"
+                color={"white"}
+                _hover={{
+                  bgGradient: "linear(to-r, red.400,pink.400)",
+                  boxShadow: "xl",
+                }}
+                type="submit"
+                value="Signup"
+              />
+               <Stack pt={6}>
+                    <Text align={"center"}>
+                     Already A User? <Link color={"blue.400"} to="/login"  >Login</Link>
+                    </Text>
+                  </Stack>
+              <ToastContainer />
+            </Box>
+            form
+          </Stack>
+        </Container>
+        <Blur
+          position={"absolute"}
+          top={-10}
+          left={-10}
+          style={{ filter: "blur(70px)" }}
+        />
+      </Box>
+    </Layout>
   );
 }
 
