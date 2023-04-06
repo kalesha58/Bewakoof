@@ -5,6 +5,7 @@ import {
     IconButton,
     Button,
     Stack,
+    HStack,
     Collapse,
     Icon,
     Image,
@@ -22,12 +23,25 @@ import {
     ChevronDownIcon,
     ChevronRightIcon,
   } from '@chakra-ui/icons';
-  import {Link} from "react-router-dom"
+  import {Link, NavLink} from "react-router-dom"
   import logo from "../images/boogylogo.png"
+  import {useAuth} from "../context/auth" 
+  import { MdDashboard } from 'react-icons/md'
+  import { BiLogOutCircle } from 'react-icons/bi'
+  // BiLogOutCircle
   
   export default function Navbar() {
     const { isOpen, onToggle } = useDisclosure();
-  
+    const [auth,setAuth]=useAuth()
+  const handleLogout = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    
+  };
     return (
       <Box  >
         <Flex
@@ -72,8 +86,8 @@ import {
               <DesktopNav />
             </Flex>
           </Flex>
-  
-          <Stack
+          {
+            !auth?.user ? <Stack
             flex={{ base: 1, md: 0 }}
             justify={'flex-end'}
             direction={'row'}
@@ -107,6 +121,28 @@ import {
             </Button>
             </Link>
           </Stack>
+          :
+          <HStack>
+            {/* <MdDashboard/> */}
+            <NavLink
+                          to={`/dashboard/${
+                            auth?.user?.role === 1 ? "admin" : "user"
+                          }`}
+                          className="dropdown-item"
+                        >
+                          <MdDashboard/>
+                        </NavLink><NavLink
+                          onClick={handleLogout}
+                          to="/login"
+                          className="dropdown-item"
+                        >
+                          <BiLogOutCircle/>
+                        </NavLink>
+
+            
+          </HStack>
+          }
+          
         </Flex>
   
         <Collapse in={isOpen} animateOpacity>
