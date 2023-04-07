@@ -10,6 +10,7 @@ import UserDashBaord from "./Pages/User/UserDashBaord";
 import PrivateRoute from "./Components/Routes/Private";
 import AdminRoute from "./Components/Routes/AdminRoute";
 import AdminDashBoard from "./Components/Admin/AdminDashBoard";
+import Topbar from "./Components/Admin/topbar/Topbar";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="" element={<UserDashBaord />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
+
+         
           <Route path="admin" element={<AdminDashBoard />} />
         </Route>
         <Route path="/register" element={<Register />} />
