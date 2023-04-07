@@ -5,17 +5,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box, Image } from "@chakra-ui/react";
 
 const data = [
-  "https://images.bewakoof.com/uploads/grid/app/1x1-fresh-summer-arrivals-common.jpg",
-  "https://images.bewakoof.com/uploads/grid/app/1x1-joggers-common-w-bdayunit-1680263895.jpg",
-  "https://images.bewakoof.com/uploads/grid/app/1x1-Birthday-Launch-Banner-02-1680270524.jpg",
-  "https://images.bewakoof.com/uploads/grid/app/1x1-tshirt-dresses-1677000030.jpg",
-  "https://images.bewakoof.com/uploads/grid/app/1x1-jumbo-prints-common-02-1677000028.jpg",
-  "https://images.bewakoof.com/uploads/grid/app/static-1x1-Polo-01-1677000030.jpg",
+  "https://images.bewakoof.com/uploads/grid/app/static-1x1-NoFade-new--1--1680669546.jpg",
+  "https://images.bewakoof.com/uploads/grid/app/1x1-cotm-common-version02--1--1680677351.jpg",
+  "https://images.bewakoof.com/uploads/grid/app/graphic-tee-bday-1680263072.jpg",
+  "https://images.bewakoof.com/uploads/grid/app/1x1-bdaylogo-bags-common-1680268706.jpg",
+  "https://images.bewakoof.com/uploads/grid/app/1x1-pyjamas-common-1680268331.jpg",
 ];
 
-export default function SimpleSlider() {
+export default function Slider2() {
   var settings = {
-
     dots: true,
     infinite: true,
     speed: 4000,
@@ -53,9 +51,9 @@ export default function SimpleSlider() {
     ],
   };
   return (
-    <Slider  {...settings}>
+    <Slider {...settings}>
       {data?.map((el, i) => (
-        <Box  key={i}>
+        <Box key={i}>
           <Image src={el} w="500px" />
         </Box>
       ))}
