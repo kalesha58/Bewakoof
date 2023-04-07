@@ -133,6 +133,7 @@ export default function Navbar() {
           </HStack>
         )}
       </Flex>
+      
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
@@ -237,6 +238,14 @@ const MobileNav = () => {
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
+      
+      <Box fontWeight={600}
+          color= "yellow.600"  > <Link to="/login" >Login</Link></Box>
+     
+      
+      <Box fontWeight={600}
+          color= "yellow.600"  ><Link to="/register" >Register</Link></Box>
+      
     </Stack>
   );
 };
@@ -290,6 +299,7 @@ const MobileNavItem = ({ label, children, href }) => {
             ))}
         </Stack>
       </Collapse>
+      
     </Stack>
   );
 };
@@ -310,8 +320,8 @@ const NAV_ITEMS = [
     //   },
     // ],
   },
-  // {
-  //   label: "Women",
+  {
+    label: "Women",
   //   children: [
   //     {
   //       label: 'Job Board',
@@ -324,11 +334,12 @@ const NAV_ITEMS = [
   //       href: '#',
   //     },
   //   ],
-  // },
-  // {
-  //   label: "Assessories",
+  },
+  {
+    label: "Assessories",
   //   href: "#",
-  // },
+  },
+  
 ];
 
 const DashboardNav = () => {
