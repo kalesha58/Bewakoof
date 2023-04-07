@@ -111,6 +111,7 @@ exports.loginUser = async (req, res) => {
         gender: user.gender,
         number: user.number,
         role: user.role,
+        avatar:user.avatar
       },
       token,
     });
