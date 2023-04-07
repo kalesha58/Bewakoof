@@ -22,18 +22,20 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../images/logos.png";
+
+
 import { useAuth } from "../context/auth";
-import { MdDashboard } from "react-icons/md";
-import { BiLogOutCircle } from "react-icons/bi";
+// import { MdDashboard } from "react-icons/md";
+// import { BiLogOutCircle } from "react-icons/bi";
 import { MdOutlineMailOutline } from "react-icons/md";
 
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   const [auth, setAuth] = useAuth();
-  const navigate = useNavigate();
-  
+  // const navigate = useNavigate();
 
   return (
     <Box>
@@ -130,11 +132,9 @@ export default function Navbar() {
             <DashboardNav />
             {/* <MdDashboard /> */}
             {/* </Link> */}
-            
           </HStack>
         )}
       </Flex>
-      
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
@@ -239,14 +239,15 @@ const MobileNav = () => {
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
-      
-      <Box fontWeight={600}
-          color= "yellow.600"  > <Link to="/login" >Login</Link></Box>
-     
-      
-      <Box fontWeight={600}
-          color= "yellow.600"  ><Link to="/register" >Register</Link></Box>
-      
+
+      <Box fontWeight={600} color="yellow.600">
+        {" "}
+        <Link to="/login">Login</Link>
+      </Box>
+
+      <Box fontWeight={600} color="yellow.600">
+        <Link to="/register">Register</Link>
+      </Box>
     </Stack>
   );
 };
@@ -300,7 +301,6 @@ const MobileNavItem = ({ label, children, href }) => {
             ))}
         </Stack>
       </Collapse>
-      
     </Stack>
   );
 };
@@ -323,24 +323,23 @@ const NAV_ITEMS = [
   },
   {
     label: "Women",
-  //   children: [
-  //     {
-  //       label: 'Job Board',
-  //       subLabel: 'Find your dream design job',
-  //       href: '#',
-  //     },
-  //     {
-  //       label: 'Freelance Projects',
-  //       subLabel: 'An exclusive list for contract work',
-  //       href: '#',
-  //     },
-  //   ],
+    //   children: [
+    //     {
+    //       label: 'Job Board',
+    //       subLabel: 'Find your dream design job',
+    //       href: '#',
+    //     },
+    //     {
+    //       label: 'Freelance Projects',
+    //       subLabel: 'An exclusive list for contract work',
+    //       href: '#',
+    //     },
+    //   ],
   },
   {
     label: "Assessories",
-  //   href: "#",
+    //   href: "#",
   },
-  
 ];
 
 const DashboardNav = () => {
@@ -381,13 +380,15 @@ const DashboardNav = () => {
                 color: linkHoverColor,
               }}
             >
-              {auth?.user ?
+              {auth?.user ? (
                 <Image
                   src={auth?.user.avatar}
                   w="50px"
                   onClick={DashboardHandlel}
                 />
-               : ""}
+              ) : (
+                ""
+              )}
             </Link>
           </PopoverTrigger>
 
@@ -432,7 +433,13 @@ const DashboardNav = () => {
                       </Link>
                     )}
                     <Text fontSize={"sm"}>Hello, {auth.user.name}</Text>
-                    <HStack display="flex" fontSize={"sm"}> <Box><MdOutlineMailOutline/></Box>   <Text>{auth.user.email}</Text>  </HStack>
+                    <HStack display="flex" fontSize={"sm"}>
+                      {" "}
+                      <Box>
+                        <MdOutlineMailOutline />
+                      </Box>{" "}
+                      <Text>{auth.user.email}</Text>{" "}
+                    </HStack>
                   </Box>
                   <Flex
                     transition={"all .3s ease"}
@@ -467,19 +474,16 @@ const DashboardNav = () => {
               >
                 <Stack direction={"row"} align={"center"}>
                   <Box>
-                    
-                      <Link to="/login">
-                        <Text
-                          transition={"all .3s ease"}
-                          _groupHover={{ color: "pink.400" }}
-                          fontWeight={500}
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </Text>
-                      </Link>
-                  
-                    
+                    <Link to="/login">
+                      <Text
+                        transition={"all .3s ease"}
+                        _groupHover={{ color: "pink.400" }}
+                        fontWeight={500}
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </Text>
+                    </Link>
                   </Box>
                   <Flex
                     transition={"all .3s ease"}
@@ -510,42 +514,4 @@ const DashboardNav = () => {
   );
 };
 
-const DashboardNavmenu = ({ href, label, name, email }) => {
-  const detail = JSON.parse(localStorage.getItem("auth"));
-  return (
-    <></>
-    // <Link
-    //   href={href}
-    //   role={"group"}
-    //   display={"block"}
-    //   p={2}
-    //   rounded={"md"}
-    //   _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-    // >
-    //   <Stack direction={"row"} align={"center"}>
-    //     <Box>
-    //       <Text
-    //         transition={"all .3s ease"}
-    //         _groupHover={{ color: "pink.400" }}
-    //         fontWeight={500}
-    //       >
-    //         {label}
-    //       </Text>
-    //       <Text fontSize={"sm"}>{name}</Text>
-    //       <Text fontSize={"sm"}>{email}</Text>
-    //     </Box>
-    //     <Flex
-    //       transition={"all .3s ease"}
-    //       transform={"translateX(-10px)"}
-    //       opacity={0}
-    //       _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-    //       justify={"flex-end"}
-    //       align={"center"}
-    //       flex={1}
-    //     >
-    //       <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-    //     </Flex>
-    //   </Stack>
-    // </Link>
-  );
-};
+
