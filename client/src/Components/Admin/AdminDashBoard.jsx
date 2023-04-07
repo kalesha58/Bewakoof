@@ -1,10 +1,14 @@
 import React from 'react'
+import Layout from './Admin-Layout/Layout'
 
 const AdminDashBoard = () => {
   return (
-    <div>
+    <Layout>
+      <div style={{"marginTop":"250px"}}>
+
       Admin-dashbaord
-    </div>
+      </div>
+    </Layout>
   )
 }
 
