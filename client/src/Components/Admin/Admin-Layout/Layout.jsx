@@ -1,13 +1,14 @@
 import React from "react";
 
 import { Helmet } from "react-helmet";
-// import Sidebar from "../sidebar/Sidebar";
+import FeaturedInfo from "../featuredInfo/FeaturedInfo";
+import Sidebar from "../sidebar/Sidebar";
 
 import Topbar from "../topbar/Topbar";
 
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
-    <div>
+    <div >
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="description" content={description} />
@@ -16,8 +17,9 @@ const Layout = ({ children, title, description, keywords, author }) => {
         <title>{title}</title>
       </Helmet>
       <Topbar />
-      <main>{children}</main>
-      {/* <Sidebar/> */}
+      <main style={{"display":"flex"}} >{children}</main>
+      <Sidebar/>
+      
     </div>
   );
 };

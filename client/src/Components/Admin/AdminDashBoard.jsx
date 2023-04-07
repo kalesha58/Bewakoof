@@ -1,15 +1,12 @@
-import React from 'react'
-import Layout from './Admin-Layout/Layout'
+import React from "react";
+
 
 const AdminDashBoard = () => {
   return (
-    <Layout>
-      <div style={{"marginTop":"250px"}}>
+   
+      <div></div>
+    
+  );
+};
 
-      Admin-dashbaord
-      </div>
-    </Layout>
-  )
-}
-
-export default AdminDashBoard
+export default AdminDashBoard;
