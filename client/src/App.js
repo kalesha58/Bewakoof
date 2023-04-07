@@ -9,8 +9,11 @@ import ErrorPage from "./Pages/ErrorPage";
 import UserDashBaord from "./Pages/User/UserDashBaord";
 import PrivateRoute from "./Components/Routes/Private";
 import AdminRoute from "./Components/Routes/AdminRoute";
-import AdminDashBoard from "./Components/Admin/AdminDashBoard";
 
+import User from "./Pages/Admin/User";
+import Products from "./Pages/Admin/Products";
+import Orders from "./Pages/Admin/Orders";
+import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
 
 function App() {
   return (
@@ -21,9 +24,10 @@ function App() {
           <Route path="" element={<UserDashBaord />} />
         </Route>
         <Route path="/dashboard" element={<AdminRoute />}>
-
-         
           <Route path="admin" element={<AdminDashBoard />} />
+          <Route path="admin/users" element={<User />} />
+          <Route path="admin/orders" element={<Orders />} />
+          <Route path="admin/products" element={<Products />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

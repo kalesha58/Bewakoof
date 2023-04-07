@@ -1,14 +1,13 @@
 import React from "react";
 
 import { Helmet } from "react-helmet";
-import FeaturedInfo from "../featuredInfo/FeaturedInfo";
-import Sidebar from "../sidebar/Sidebar";
-
-import Topbar from "../topbar/Topbar";
-
-const Layout = ({ children, title, description, keywords, author }) => {
+import Header from "../../Components/Admin/Header";
+import Footer from "../Admin/Footer";
+import SideMenu from "../Admin/SideMenu";
+import "./AdminLayout.css";
+const AdminLayout = ({ children, title, description, keywords, author }) => {
   return (
-    <div >
+    <>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="description" content={description} />
@@ -16,19 +15,21 @@ const Layout = ({ children, title, description, keywords, author }) => {
         <meta name="author" content={author} />
         <title>{title}</title>
       </Helmet>
-      <Topbar />
-      <main style={{"display":"flex"}} >{children}</main>
-      <Sidebar/>
-      
-    </div>
+      <div className="App">
+        <Header />
+        
+        <div className="SideMenuAndPageContent">{children}</div>
+        <Footer />
+      </div>
+    </>
   );
 };
 
-Layout.defaultProps = {
+AdminLayout.defaultProps = {
   title: "Bewakoof app - shop now",
   description: "mern stack project",
   keywords: "mern,react,node,mongodb",
   author: "Bewakoof",
 };
 
-export default Layout;
+export default AdminLayout;

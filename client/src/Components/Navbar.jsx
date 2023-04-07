@@ -23,7 +23,7 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../images/boogylogo.png";
+import logo from "../images/logos.png";
 import { useAuth } from "../context/auth";
 import { MdDashboard } from "react-icons/md";
 import { BiLogOutCircle } from "react-icons/bi";
@@ -72,7 +72,8 @@ export default function Navbar() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            <Image src={logo} alt="logo" w={"100px"} />
+            {/* <Image src={logo} alt="logo" w={"150px"} /> */}
+            <Image src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo-bday-y23.svg" alt="logo" w={"150px"} />
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
