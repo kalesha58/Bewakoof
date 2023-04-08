@@ -308,7 +308,7 @@ export default function Register() {
                   }}
                 />
                 <Input
-                  placeholder="+91   (_)    _- _-  __"
+                  placeholder="+91   ()    _- _-  _"
                   name="number"
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}

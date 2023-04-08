@@ -1,38 +1,74 @@
 import React from "react";
+
 import SideMenu from "../../Components/Admin/SideMenu";
 import AdminLayout from "../../Components/Layout/AdminLayout";
 import "./AdminDashBoard.css";
 import { Avatar, Rate, Space, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { getInventory } from "../../API";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  clearErrors,
+  deleteProduct,
+  getAdminProduct,
+} from "../../Redux/Actions/productAction";
 
+
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DELETE_PRODUCT_RESET } from "../../Redux/Constants/productConstant";
+import { useNavigate ,useParams } from "react-router-dom";
 const Products = () => {
+  const { error, products } = useSelector((state) => state.products);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.productsDU
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const  {postId}  = useParams();
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState([]);
-
+ console.log(dataSource)
+  const deleteProductHandler = (postId) => {
+    dispatch(deleteProduct(postId));
+  };
   useEffect(() => {
-    setLoading(true);
-    getInventory().then((res) => {
-      setDataSource(res.products);
-      setLoading(false);
-    });
-  }, []);
+    if (error) {
+      dispatch(clearErrors());
+    }
+
+    if (deleteError) {
+      dispatch(clearErrors());
+    }
+    if (isDeleted) {
+      alert.success("Product Deleted Successfully");
+      navigate("/dashboard/admin");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+    }
+
+    dispatch(getAdminProduct());
+    setDataSource(products);
+  }, [dispatch, error, deleteError, isDeleted, navigate]);
 
   return (
     <AdminLayout>
       <div className="sidemenu-div">
         <SideMenu />
       </div>
-      <Space  style={{"width":"80%"}} className="main" size={10} direction="vertical">
+      <Space
+        style={{ width: "80%" }}
+        className="main"
+        size={10}
+        direction="vertical"
+      >
         <Typography.Title level={4}>Inventory</Typography.Title>
         <Table
           loading={loading}
           columns={[
             {
               title: "Thumbnail",
-              dataIndex: "thumbnail",
-              render: (link) => {
-                return <Avatar src={link} />;
+              dataIndex: "images",
+              render: (URl) => {
+                return <Avatar src={URl} />;
               },
             },
             {
@@ -41,7 +77,7 @@ const Products = () => {
             },
             {
               title: "Price",
-              dataIndex: "price",
+              dataIndex: "discounted_price",
               render: (value) => <span>${value}</span>,
             },
             {
@@ -53,7 +89,7 @@ const Products = () => {
             },
             {
               title: "Stock",
-              dataIndex: "stock",
+              dataIndex: "Stock",
             },
 
             {
@@ -63,6 +99,22 @@ const Products = () => {
             {
               title: "Category",
               dataIndex: "category",
+            },
+            {
+              title: "Action",
+              key: "action",
+              render: (_, params) => (
+                <Space size="middle">
+                  <EditOutlined />
+                  <a>
+                    <DeleteOutlined
+                      onClick={() =>
+                        deleteProductHandler(params.getValue(params.id, "id"))
+                      }
+                    />
+                  </a>
+                </Space>
+              ),
             },
           ]}
           dataSource={dataSource}
