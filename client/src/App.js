@@ -14,7 +14,8 @@ import User from "./Pages/Admin/User";
 import Products from "./Pages/Admin/Products";
 import Orders from "./Pages/Admin/Orders";
 import AdminDashBoard from "./Pages/Admin/AdminDashBoard";
-
+import CreateProducts from "./Pages/Admin/CreateProducts";
+import CreateUsers from "./Pages/Admin/CreateUsers";
 function App() {
   return (
     <div>
@@ -28,6 +29,8 @@ function App() {
           <Route path="admin/users" element={<User />} />
           <Route path="admin/orders" element={<Orders />} />
           <Route path="admin/products" element={<Products />} />
+          <Route path="admin/createproduct" element={<CreateProducts />} />
+          <Route path="admin/createuser" element={<CreateUsers />} />
         </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

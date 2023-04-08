@@ -13,7 +13,10 @@
 .main {
   margin-left: 20px;
 }
-
+.lineChart {
+  width: 140%;
+  /* margin: auto; */
+}
 .App {
   display: flex;
   flex-direction: column;

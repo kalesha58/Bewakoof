@@ -6,16 +6,28 @@ import { Avatar, Rate, Space, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { getInventory, getOrders } from "../../API";
 
+import {useDispatch,useSelector} from "react-redux"
+import { clearErrors, getAllOrders } from '../../Redux/Actions/orderAction';
+
 const Orders = () => {
+  const dispatch = useDispatch();
+  const { error, orders } = useSelector((state) => state.allOrders);
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState([]);
-
+console.log(orders)
   useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
     setLoading(true);
-    getOrders().then((res) => {
-      setDataSource(res.products);
-      setLoading(false);
-    });
+   
+    dispatch(getAllOrders())
+   
+    setDataSource(orders);
+    setLoading(false);
+     
+  
   }, []);
   return (
     <AdminLayout>

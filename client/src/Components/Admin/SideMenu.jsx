@@ -2,7 +2,9 @@ import {
   AppstoreOutlined,
   ShopOutlined,
   ShoppingCartOutlined,
+  PlusCircleOutlined,
   UserOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
@@ -35,19 +37,30 @@ const SideMenu = () => {
             key: "/dashboard/admin",
           },
           {
-            label: "Inventory",
+            label: "Products",
             key: "/dashboard/admin/products",
             icon: <ShopOutlined />,
+          },
+          {
+            label: "Create Products",
+            key: "/dashboard/admin/createproduct",
+            icon: <PlusCircleOutlined />,
           },
           {
             label: "Orders",
             key: "/dashboard/admin/orders",
             icon: <ShoppingCartOutlined />,
           },
+
           {
-            label: "Customers",
+            label: "Users",
             key: "/dashboard/admin/users",
             icon: <UserOutlined />,
+          },
+          {
+            label: "Create User",
+            key: "/dashboard/admin/createuser",
+            icon: <UserAddOutlined />,
           },
         ]}
       ></Menu>

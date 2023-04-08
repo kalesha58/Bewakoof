@@ -3,9 +3,16 @@ import { legacy_createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { userReducer } from "./Redux/Reducers/userReducer";
+import { allUsersReducer, userReducer } from "./Redux/Reducers/userReducer";
+import { newProductReducer, productsReducer } from "./Redux/Reducers/productReducer";
+import { allOrdersReducer } from "./Redux/Reducers/orderReducer";
 const reducer = combineReducers({
-  user:userReducer
+  user:userReducer,
+  // {==ADMIN====}
+  products: productsReducer,
+  allUsers: allUsersReducer,
+  allOrders: allOrdersReducer,
+  newProduct:newProductReducer
 });
 let initialState = {};
 const middleware = [thunk];

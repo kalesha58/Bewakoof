@@ -1,38 +1,53 @@
 import React from "react";
+
 import SideMenu from "../../Components/Admin/SideMenu";
 import AdminLayout from "../../Components/Layout/AdminLayout";
 import "./AdminDashBoard.css";
 import { Avatar, Rate, Space, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
-import { getInventory } from "../../API";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  clearErrors,
+  getAdminProduct,
+} from "../../Redux/Actions/productAction";
 
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 const Products = () => {
+  const dispatch = useDispatch();
+  const { error, products } = useSelector((state) => state.products);
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState([]);
-
+  console.log(products);
+  const URl = products?.images?.url;
   useEffect(() => {
-    setLoading(true);
-    getInventory().then((res) => {
-      setDataSource(res.products);
-      setLoading(false);
-    });
-  }, []);
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getAdminProduct());
+    setDataSource(products);
+  }, [dispatch, error]);
 
   return (
     <AdminLayout>
       <div className="sidemenu-div">
         <SideMenu />
       </div>
-      <Space  style={{"width":"80%"}} className="main" size={10} direction="vertical">
+      <Space
+        style={{ width: "80%" }}
+        className="main"
+        size={10}
+        direction="vertical"
+      >
         <Typography.Title level={4}>Inventory</Typography.Title>
         <Table
           loading={loading}
           columns={[
             {
               title: "Thumbnail",
-              dataIndex: "thumbnail",
-              render: (link) => {
-                return <Avatar src={link} />;
+              dataIndex: "images",
+              render: (URl) => {
+                return <Avatar src={URl} />;
               },
             },
             {
@@ -41,7 +56,7 @@ const Products = () => {
             },
             {
               title: "Price",
-              dataIndex: "price",
+              dataIndex: "discounted_price",
               render: (value) => <span>${value}</span>,
             },
             {
@@ -53,7 +68,7 @@ const Products = () => {
             },
             {
               title: "Stock",
-              dataIndex: "stock",
+              dataIndex: "Stock",
             },
 
             {
@@ -63,6 +78,18 @@ const Products = () => {
             {
               title: "Category",
               dataIndex: "category",
+            },
+            {
+              title: "Action",
+              key: "action",
+              render: (_, record) => (
+                <Space size="middle">
+                  <EditOutlined />
+                  <a>
+                    <DeleteOutlined />
+                  </a>
+                </Space>
+              ),
             },
           ]}
           dataSource={dataSource}
