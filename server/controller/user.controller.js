@@ -13,24 +13,24 @@ exports.registerUser = async (req, res) => {
   //   crop: "scale",
   // });
   try {
-    const { name, email, password, number, answer, avatar } = req.body;
+    const { name, email, password, gender, number, answer, avatar } = req.body;
     //validations
-    // if (!name) {
-    //   return res.send({ error: "Name is Required" });
-    // }
-    // if (!email) {
-    //   return res.send({ message: "Email is Required" });
-    // }
-    // if (!password) {
-    //   return res.send({ message: "Password is Required" });
-    // }
+    if (!name) {
+      return res.send({ error: "Name is Required" });
+    }
+    if (!email) {
+      return res.send({ message: "Email is Required" });
+    }
+    if (!password) {
+      return res.send({ message: "Password is Required" });
+    }
 
-    // if (!answer) {
-    //   return res.send({ message: "answer  is Required" });
-    // }
-    // if (!number) {
-    //   return res.send({ message: "mobile no. is Required" });
-    // }
+    if (!answer) {
+      return res.send({ message: "answer  is Required" });
+    }
+    if (!number) {
+      return res.send({ message: "mobile no. is Required" });
+    }
 
     //check user
     const exisitingUser = await User.findOne({ email });

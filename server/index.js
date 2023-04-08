@@ -10,10 +10,10 @@ const bodyParser=require("body-parser")
 const fileUpload = require("express-fileupload");
 const app = express();
 require("dotenv").config();
-// app.use(express.json());
+app.use(express.json());
 const port = process.env.PORT;
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true,parameterLimit:500000,limit:"2000mb" }));
 app.use(
   cors({
     origin: true,

@@ -20,8 +20,8 @@ productRoute.get("/admin/getproducts", requireSignIn, isAdmin, getAdminAllProduc
 
 productRoute.get("/getproducts/:id", getSingleProduct);
 
-productRoute.delete("/getproducts/:id", requireSignIn, isAdmin, deleteProduct);
+productRoute.delete("/admin/getproducts/:id", requireSignIn, isAdmin, deleteProduct);
 
-productRoute.put("/getproducts/:id", requireSignIn, isAdmin, updateProduct);
+productRoute.put("/admin/getproducts/:id", requireSignIn, isAdmin, updateProduct);
 
 module.exports = productRoute;

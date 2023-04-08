@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { allUsersReducer, userReducer } from "./Redux/Reducers/userReducer";
-import { newProductReducer, productsReducer } from "./Redux/Reducers/productReducer";
+import { newProductReducer, productReducerDU, productsReducer } from "./Redux/Reducers/productReducer";
 import { allOrdersReducer } from "./Redux/Reducers/orderReducer";
 const reducer = combineReducers({
   user:userReducer,
@@ -12,7 +12,8 @@ const reducer = combineReducers({
   products: productsReducer,
   allUsers: allUsersReducer,
   allOrders: allOrdersReducer,
-  newProduct:newProductReducer
+  newProduct:newProductReducer,
+  productsDU:productReducerDU
 });
 let initialState = {};
 const middleware = [thunk];

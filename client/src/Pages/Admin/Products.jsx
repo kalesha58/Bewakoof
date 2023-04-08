@@ -8,25 +8,46 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   clearErrors,
+  deleteProduct,
   getAdminProduct,
 } from "../../Redux/Actions/productAction";
 
+
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DELETE_PRODUCT_RESET } from "../../Redux/Constants/productConstant";
+import { useNavigate ,useParams } from "react-router-dom";
 const Products = () => {
-  const dispatch = useDispatch();
   const { error, products } = useSelector((state) => state.products);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.productsDU
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const  {postId}  = useParams();
   const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState([]);
-  console.log(products);
-  const URl = products?.images?.url;
+ console.log(dataSource)
+  const deleteProductHandler = (postId) => {
+    dispatch(deleteProduct(postId));
+  };
   useEffect(() => {
     if (error) {
-      alert.error(error);
       dispatch(clearErrors());
     }
+
+    if (deleteError) {
+      dispatch(clearErrors());
+    }
+    if (isDeleted) {
+      alert.success("Product Deleted Successfully");
+      navigate("/dashboard/admin");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+    }
+
     dispatch(getAdminProduct());
     setDataSource(products);
-  }, [dispatch, error]);
+  }, [dispatch, error, deleteError, isDeleted, navigate]);
 
   return (
     <AdminLayout>
@@ -82,11 +103,15 @@ const Products = () => {
             {
               title: "Action",
               key: "action",
-              render: (_, record) => (
+              render: (_, params) => (
                 <Space size="middle">
                   <EditOutlined />
                   <a>
-                    <DeleteOutlined />
+                    <DeleteOutlined
+                      onClick={() =>
+                        deleteProductHandler(params.getValue(params.id, "id"))
+                      }
+                    />
                   </a>
                 </Space>
               ),
