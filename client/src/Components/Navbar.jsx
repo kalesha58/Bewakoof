@@ -75,7 +75,7 @@ export default function Navbar() {
             color={useColorModeValue("gray.800", "white")}
           >
             {/* <Image src={logo} alt="logo" w={"150px"} /> */}
-            <Image src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo-bday-y23.svg" alt="logo" w={"150px"} />
+            <Image src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo-bday-y23.svg" alt="logo" w={"150px"}  />
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -370,6 +370,7 @@ const DashboardNav = () => {
       <Box>
         <Popover trigger={"hover"} placement={"bottom-start"}>
           <PopoverTrigger>
+            
             <Link
               p={2}
               fontSize={"sm"}
@@ -384,6 +385,7 @@ const DashboardNav = () => {
                 <Image
                   src={auth?.user.avatar}
                   w="50px"
+                  borderRadius={"50%"}
                   onClick={DashboardHandlel}
                 />
               ) : (
